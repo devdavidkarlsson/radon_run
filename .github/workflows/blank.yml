@@ -136,7 +136,7 @@ jobs:
           </plist>
         EOT
     - name: Package release
-      run: zip radon_run.zip radon_run.app
+      run: zip -r radon_run.zip radon_run.app
                 
     - name: Create Release
       id: create_release
