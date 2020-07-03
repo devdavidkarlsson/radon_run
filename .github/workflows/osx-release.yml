@@ -2,13 +2,20 @@
 
 name: CI
 
+  tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
+
 # Controls when the action will run. Triggers the workflow on push or pull request
 # events but only for the master branch
 on:
   push:
     branches: [ master ]
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
   pull_request:
     branches: [ master ]
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -136,7 +143,7 @@ jobs:
           </plist>
         EOT
     - name: Package release
-      run: zip -r radon_run.zip radon_run.app
+      run: zip -r radon_run-macosx-x64.zip radon_run.app
                 
     - name: Create Release
       id: create_release
@@ -155,6 +162,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps 
-        asset_path: ./radon_run.zip
+        asset_path: ./radon_run-macosx-x64.zip
         asset_name: radon_run-macosx-x64.zip
         asset_content_type: application/zip 
